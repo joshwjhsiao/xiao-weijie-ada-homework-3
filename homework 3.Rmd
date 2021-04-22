@@ -217,11 +217,10 @@ boot_lm <- function(d, model, conf.level = 0.95, reps = 1000)  {
   df$MeanBetaBoot[2] <- mean(bootstrap$beta1)
   df$SEBoot[1] <- sd(bootstrap$beta0)
   df$SEBoot[2] <- sd(bootstrap$beta1)
-  alpha <- 1 - conf.level
-  df$UprCIBoot[1] <- quantile(bootstrap$beta0, 1 - (alpha/2))
-  df$UprCIBoot[2] <- quantile(bootstrap$beta1, 1 - (alpha/2))
-  df$LwrCIBoot[1] <- quantile(bootstrap$beta0, alpha/2)
-  df$LwrCIBoot[2] <- quantile(bootstrap$beta1, alpha/2)
+  df$UprCIBoot[1] <- quantile(bootstrap$beta0,  probs = (1-conf.level)/2)
+  df$UprCIBoot[2] <- quantile(bootstrap$beta1, (1-conf.level)/2)
+  df$LwrCIBoot[1] <- quantile(bootstrap$beta0, probs = 1 - (1 - conf.level)/2)
+  df$LwrCIBoot[2] <- quantile(bootstrap$beta1, probs = 1 - (1 - conf.level)/2)
   df
 }
 ```
